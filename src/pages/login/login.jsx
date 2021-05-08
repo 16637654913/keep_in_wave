@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.less'
+import {reLogin} from '../../api/index'
 const NormalLoginForm = () => {
     const onFinish = (values) => {
+      const {username,password} = values
+      reLogin(username,password).then(response=>{
+        console.log('成功了',response.data)
+      }).catch(error=>{console.log(error)})
       console.log('Received values of form: ', values);
     };
   
