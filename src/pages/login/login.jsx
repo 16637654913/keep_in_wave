@@ -1,14 +1,37 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button ,message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import {Redirect} from 'react-router-dom'
 import './login.less'
 import {reLogin} from '../../api/index'
-const NormalLoginForm = () => {
-    const onFinish = (values) => {
+import memoryUtils from "../../utils/memoryUtils"
+import storageUtils from "../../utils/storageUtils"
+const NormalLoginForm =() => {
+    //已登录则调转
+    const user = memoryUtils.user
+    if(user && user._id){
+      return <Redirect to='/'/>
+    }
+
+    const onFinish =async (values) => {
       const {username,password} = values
-      reLogin(username,password).then(response=>{
-        console.log('成功了',response.data)
-      }).catch(error=>{console.log(error)})
+      try{
+        const response = await reLogin(username,password)
+        console.log('请求成功',response.data)
+        const result = response.data.status
+        if(!result){
+          message.success('登陆成功')
+          const user = response.data
+          memoryUtils.user = user
+          storageUtils.saveUser(user)
+          this.props.value.replace('/')
+        }else{
+          message.error(response.data.msg)
+        }
+      } catch(error){
+        console.log("请求出错",error)
+      }
+      //async,await,作用：简化promise对象的使用，不再用then来指定成功和失败的回调
       console.log('Received values of form: ', values);
     };
   
