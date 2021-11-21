@@ -1,6 +1,7 @@
 import logo from './logo.svg';
+import {Button} from 'antd'
 import './App.css';
-
+import NavBar from './components/navBar.js';
 function App() {
   return (
     <div className="App">
@@ -17,6 +18,8 @@ function App() {
         >
           Learn React
         </a>
+        <Button type= 'primary'>54</Button>
+        <NavBar></NavBar>
       </header>
     </div>
   );
