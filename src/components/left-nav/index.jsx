@@ -43,7 +43,7 @@ class LeftNav extends Component {
         return (
             <div className="left-nav">
                 <Link to='/' className = "left-nav-header">
-                    <h2>硅谷后台</h2>
+                    <h2>demo</h2>
                 </Link>
                 <div style={{ width: 200 }}>
                     <Menu
